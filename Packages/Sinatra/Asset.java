@@ -1,4 +1,11 @@
-/*Asset Class function for Sinatra Package*/
+/*Asset Class function for Sinatra Package, we should note a few assumtions about the movement
+  of the asset over time. The model we use assumes the asset follows geometric brownian motion
+  given by the stochastic differencial equation dS(s, t) = uS(s, t)dt + vS(s, t)dWt, where
+  S(s, t) is our random variable (under the normal distribution), u is the (deterministic) drift
+  rate, v is the (stochastic) volatility and we define Wt as the wiener process (Norbert Wiener)
+  which is defined Wt = (t)^1/2 *Z (Z our normal distribution random variable). Solving this using
+  stochastic integrate we get that S(s, t) = S(s, 0)exp((u - (v^2)/2)t + vWt) which gives us our
+  geormetric brownian motion solution (Further detail in the notes) */
 
 package Packages.Sinatra;
 

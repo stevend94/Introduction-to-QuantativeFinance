@@ -4,9 +4,7 @@
 
 package Packages.StandardNormalDistribution;
 
-import java.lang.Math.*;
-
-public class SND {
+class SND {
   private static boolean IS_ACTIVE = false;           //To check when this object is in operation
   private float[] SND_Points = {
   0.5000f, 0.5040f, 0.5080f, 0.5120f, 0.5160f, 0.5199f, 0.5239f, 0.5279f, 0.5319f, 0.5359f,
@@ -53,7 +51,7 @@ public class SND {
 
   public float LinearInterpolate(float value) {
     //Function to find mid point and linearly interpolate data
-    float data_point = (float)Math.floor(value*100);
+    float data_point = (float)java.lang.Math.floor(value*100);
     if (data_point > 349) {
       return 1;               //Given a certain point we simply return the closest approximation which is 1
     }

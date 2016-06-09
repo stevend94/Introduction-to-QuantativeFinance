@@ -11,28 +11,29 @@ is described by geometric brownian motion and under constant interest rates thro
 package Packages.Sinatra;
 
 public abstract class Derivative {
-  private String name;              //Name of derivative (if given)
-  private float value;              //Value of the derivative based on black scholes model
-  private float strike;
-  private Asset asset;              //Underlying asset associated with derivative
-  private double maturity;           //Time till maturity to be more exact
+  protected String name;              //Name of derivative (if given)
+  protected float value;              //Value of the derivative based on black scholes model
+  protected float strike;             //Strike price of the derivative
+  protected Asset asset;              //Underlying asset associated with derivative
+  protected double maturity;          //Time till maturity to be more exact
   static int NO_ACTIVE_DERIVATIVES;
+  private static final float INTEREST = 0.5f; //For convenience we fix the (annual continuously compounded)
+                                              //interest rates for derivates at 0.5
 
-  //Function to return name of derivative
-  public String getName() { return this.name; }
 
-  //Function to return the value of the derivative
-  public float getValue() { return this.value; }
+  /*All Return functions for derivative class object variables in order of occurence*/
+  public String getName() { return this.name; }            //Function to return name of derivative
 
-  //Function to return the strike priceof the derivative
-  public float getStrike() { return this.strike; }
+  public float getValue() { return this.value; }           //Function to return the value of the derivative
 
-  //Function to return the maturity date of the derivative
-  public double getMaturity() { return this.maturity; }
+  public float getStrike() { return this.strike; }         //Function to return the strike priceof the derivative
 
-  //function to return the underlying asset
-  public Asset getAsset() { return this.asset; }
+  public Asset getAsset() { return this.asset; }           //function to return the underlying asset
+
+  public double getMaturity() { return this.maturity; }    //Function to return the maturity date of the derivative
+
+  public float getInterest() { return this.INTEREST; }     //function to return world interest rate
 
   //Abstract function that will determine the value of the derivative
-  abstract void updateValue();
+  abstract void UpdateValue();
 }

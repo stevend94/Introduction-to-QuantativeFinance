@@ -6,7 +6,8 @@
  */
 import Packages.Sinatra.Asset;
 import Packages.Sinatra.Derivative;
-import Packages.StandardNormalDistribution.SND;
+import Packages.Sinatra.Forward;
+import Packages.Sinatra.Future;
 
 
 public class Main{
@@ -16,8 +17,9 @@ public class Main{
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        SND s = new SND();
-        System.out.println(s.LinearInterpolate(1.237f));
+        Asset asset = new Asset(7.21f, "ASDX", 0.21, 0.2);
+        Forward forward = new Forward(asset, 8f, 0.5);
+        System.out.println(forward.getValue());
         System.out.println("Systems Operational: True");
     }
 
