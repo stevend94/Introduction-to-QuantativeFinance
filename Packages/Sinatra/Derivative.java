@@ -10,15 +10,15 @@ is described by geometric brownian motion and under constant interest rates thro
 
 package Packages.Sinatra;
 
+import Packages.GlobalVariables;
+
 public abstract class Derivative {
   protected String name;              //Name of derivative (if given)
   protected float value;              //Value of the derivative based on black scholes model
   protected float strike;             //Strike price of the derivative
   protected Asset asset;              //Underlying asset associated with derivative
-  protected double maturity;          //Time till maturity to be more exact
+  protected float maturity;          //Time till maturity to be more exact
   static int NO_ACTIVE_DERIVATIVES;
-  private static final float INTEREST = 0.5f; //For convenience we fix the (annual continuously compounded)
-                                              //interest rates for derivates at 0.5
 
 
   /*All Return functions for derivative class object variables in order of occurence*/
@@ -31,8 +31,6 @@ public abstract class Derivative {
   public Asset getAsset() { return this.asset; }           //function to return the underlying asset
 
   public double getMaturity() { return this.maturity; }    //Function to return the maturity date of the derivative
-
-  public float getInterest() { return this.INTEREST; }     //function to return world interest rate
 
   //Abstract function that will determine the value of the derivative
   abstract void UpdateValue();

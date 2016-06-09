@@ -14,9 +14,11 @@
 
 package Packages.Sinatra;
 
+import Packages.GlobalVariables;
+
 public class Future extends Derivative {
   //Default constructor for Future class object
-  public Future(Asset new_asset, float new_strike, double new_maturity) {
+  public Future(Asset new_asset, float new_strike, float new_maturity) {
     this.asset = new_asset;         //set new asset
     this.strike = new_strike;       //set new strike price
     this.maturity = new_maturity;   //set new maturity date
@@ -26,8 +28,8 @@ public class Future extends Derivative {
   }
 
   //Alternative constructor for Future class object which creates the asset aswell
-  public Future(float new_price, String new_name, double new_drift_rate,
-                 double new_volatility, float new_strike, double new_maturity)
+  public Future(float new_price, String new_name, float new_drift_rate,
+                 float new_volatility, float new_strike, float new_maturity)
   {
     Asset new_asset = new Asset(new_price, new_name, new_drift_rate, new_volatility);  //Create new asset object
     this.asset = new_asset;         //set new asset
@@ -38,8 +40,8 @@ public class Future extends Derivative {
     NO_ACTIVE_DERIVATIVES++;
     }
 
-    public void UpdateValue() {
+     void UpdateValue() {
       //Function constructed for Future contract using our Theorem G=Se^RT
-      this.value = asset.getPrice()*((float)java.lang.Math.exp(getInterest()*getMaturity()));
+      this.value = asset.getPrice()*((float)java.lang.Math.exp(GlobalVariables.INTEREST*getMaturity()));
     }
 }

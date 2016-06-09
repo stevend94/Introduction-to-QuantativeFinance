@@ -11,10 +11,12 @@
 
 package Packages.Sinatra;
 
+import Packages.GlobalVariables;
+
 public class Forward extends Derivative {
 
   //Default constructor for Forward class object
-  public Forward(Asset new_asset, float new_strike, double new_maturity) {
+  public Forward(Asset new_asset, float new_strike, float new_maturity) {
     this.asset = new_asset;         //set new asset
     this.strike = new_strike;       //set new strike price
     this.maturity = new_maturity;   //set new maturity date
@@ -24,8 +26,8 @@ public class Forward extends Derivative {
   }
 
   //Alternative constructor for Forward class object which creates the asset aswell
-  public Forward(float new_price, String new_name, double new_drift_rate,
-                 double new_volatility, float new_strike, double new_maturity)
+  public Forward(float new_price, String new_name, float new_drift_rate,
+                 float new_volatility, float new_strike, float new_maturity)
   {
     Asset new_asset = new Asset(new_price, new_name, new_drift_rate, new_volatility);  //Create new asset object
     this.asset = new_asset;         //set new asset
@@ -36,9 +38,9 @@ public class Forward extends Derivative {
     NO_ACTIVE_DERIVATIVES++;
     }
 
-    public void UpdateValue() {
+    void UpdateValue() {
       //Function constructed for Forward contract using non arbitrage argument F=Se^RT
-      this.value = asset.getPrice()*((float)java.lang.Math.exp(getInterest()*getMaturity()));
+      this.value = asset.getPrice()*((float)java.lang.Math.exp(GlobalVariables.INTEREST*getMaturity()));
     }
 
 }

@@ -4,7 +4,9 @@
 
 package Packages.StandardNormalDistribution;
 
-class SND {
+import Packages.GlobalVariables;
+
+public class SND {
   private static boolean IS_ACTIVE = false;           //To check when this object is in operation
   private float[] SND_Points = {
   0.5000f, 0.5040f, 0.5080f, 0.5120f, 0.5160f, 0.5199f, 0.5239f, 0.5279f, 0.5319f, 0.5359f,
@@ -51,21 +53,43 @@ class SND {
 
   public float LinearInterpolate(float value) {
     //Function to find mid point and linearly interpolate data
-    float data_point = (float)java.lang.Math.floor(value*100);
-    if (data_point > 349) {
-      return 1;               //Given a certain point we simply return the closest approximation which is 1
-    }
 
-    //Determines the difference between the upper & lower points and the correct placement between them
-    float dif_point = (value - (data_point/100))/0.01f;
+    if ( value >= 0) { //case that the value is greater than or equal to 0
+        float data_point = (float)java.lang.Math.floor(value*100);
+        if (data_point > GlobalVariables.SND_BREAK_POINT) {
+          return 1;               //Given a certain point we simply return the closest approximation which is 1
+        }
 
-    //Finds the correct differece between the upper & lower points in the cummulitive density function
-    float distance = SND_Points[(int)data_point+1] - SND_Points[(int)data_point];
+        //Determines the difference between the upper & lower points and the correct placement between them
+        float dif_point = (value - (data_point/100))/0.01f;
 
-    //The amount to add to the lower distribution point, then added to interpolate
-    float interpolate_point = (dif_point * distance) + SND_Points[(int)data_point];
+        //Finds the correct differece between the upper & lower points in the cummulitive density function
+        float distance = SND_Points[(int)data_point+1] - SND_Points[(int)data_point];
 
-    return interpolate_point;
+        //The amount to add to the lower distribution point, then added to interpolate
+        float interpolate_point = (dif_point * distance) + SND_Points[(int)data_point];
+
+        return interpolate_point;
+      }
+
+   if ( value < 0) { //case that the value is less than 0
+        value = -1 * value;
+        float data_point = (float)java.lang.Math.floor(value*100);
+        if (data_point > GlobalVariables.SND_BREAK_POINT) {
+          return 0;               //Given a certain point we simply return the closest approximation which is 1
+        }
+
+        //Determines the difference between the upper & lower points and the correct placement between them
+        float dif_point = (value - (data_point/100))/0.01f;
+
+        //Finds the correct differece between the upper & lower points in the cummulitive density function
+        float distance = SND_Points[(int)data_point+1] - SND_Points[(int)data_point];
+
+        //The amount to add to the lower distribution point, then added to interpolate
+        float interpolate_point = (dif_point * distance) + SND_Points[(int)data_point];
+
+        return 1 - interpolate_point;
+      }
 
   }
 }
