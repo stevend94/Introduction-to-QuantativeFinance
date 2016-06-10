@@ -76,7 +76,7 @@ public class SND {
         value = -1 * value;
         float data_point = (float)java.lang.Math.floor(value*100);
         if (data_point > GlobalVariables.SND_BREAK_POINT) {
-          return 0;               //Given a certain point we simply return the closest approximation which is 1
+          return 0;               //Given a certain point we simply return the closest approximation which is 0
         }
 
         //Determines the difference between the upper & lower points and the correct placement between them
@@ -91,5 +91,6 @@ public class SND {
         return 1 - interpolate_point;
       }
 
+       return 0;   //Never reaches here, just returns null 
   }
 }

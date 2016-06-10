@@ -15,29 +15,39 @@
 package Packages.Sinatra;
 
 import Packages.GlobalVariables;
+import Packages.Position;
 
 public class Future extends Derivative {
-  //Default constructor for Future class object
-  public Future(Asset new_asset, float new_strike, float new_maturity) {
-    this.asset = new_asset;         //set new asset
-    this.strike = new_strike;       //set new strike price
-    this.maturity = new_maturity;   //set new maturity date
 
-    UpdateValue();                  //Update the value of the derivative
-    NO_ACTIVE_DERIVATIVES++;
+  //Default constructor for Future class object
+  public Future(Asset new_asset, float new_strike, float new_maturity, Position new_position) {
+    super(new_asset, new_strike, new_maturity, new_position);
   }
 
   //Alternative constructor for Future class object which creates the asset aswell
-  public Future(float new_price, String new_name, float new_drift_rate,
-                 float new_volatility, float new_strike, float new_maturity)
+  public Future(float new_price, String new_name, float new_drift_rate, float new_volatility,
+                    float new_strike, float new_maturity, Position new_position)
   {
-    Asset new_asset = new Asset(new_price, new_name, new_drift_rate, new_volatility);  //Create new asset object
-    this.asset = new_asset;         //set new asset
-    this.strike = new_strike;       //set new strike price
-    this.maturity = new_maturity;   //set new maturity date
+    super(new_price, new_name, new_drift_rate, new_volatility,
+          new_strike, new_maturity, new_position);
+  }
 
-    UpdateValue();                  //Update the value of the derivative
-    NO_ACTIVE_DERIVATIVES++;
+    //Function to change strike price to no arbitrage value
+    public void fixStrike() { this.strike = this.value; }
+
+    //Pay-off method for futures contracts given financial position (though more of an approximation)
+    public float payOff(float asset_value) {
+      float pay_off = 0f;
+      switch (position) {
+        case SHORT:
+             pay_off = strike - asset_value;      //Short position case, F = X - S
+             break;
+
+        case LONG:
+            pay_off = asset_value - strike;       //Long position case, F = S - X
+            break;
+      }
+      return pay_off;
     }
 
      void UpdateValue() {
