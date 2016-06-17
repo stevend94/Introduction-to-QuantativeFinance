@@ -11,8 +11,12 @@
   public static final float INTEREST = 0.5f;
 
   //Our pre set maximum number of objects allowed at any given time
-  public static final int MAX_ASSET = 5;
-  public static final int MAX_DERIVATIVES = 10;
+  public static final int MAX_ASSETS = 5;
+  public static final int MAX_BONDS = 5;
+  public static final int MAX_FORWARDS = 5;
+  public static final int MAX_FUTURES = 5;
+  public static final int MAX_CALLS = 5;
+  public static final int MAX_PUTS = 5;
 
   //Breakoff point for normal distribution (point in which the probability accurate enought to be 1)
   public static final int SND_BREAK_POINT = 349;

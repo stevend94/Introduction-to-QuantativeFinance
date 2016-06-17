@@ -8,10 +8,11 @@
 It should be noted that we are operating under the assumtion that the asset price follows a pattern that
 is described by geometric brownian motion and under constant interest rates throughout */
 
-package Packages.Sinatra;
+package Packages.Assets.Derivatives;
 
 import Packages.GlobalVariables;
 import Packages.Position;
+import Packages.Assets.Asset;
 
 public abstract class Derivative {
   protected String name;                              //Name of derivative (if given)
@@ -19,29 +20,32 @@ public abstract class Derivative {
   protected float strike;                             //Strike price of the derivative
   protected Asset asset;                              //Underlying asset associated with derivative
   protected float maturity;                           //Time till maturity to be more exact
-  protected Position position;        //Position with derivative (either short or long)
   static int NO_ACTIVE_DERIVATIVES;
+  protected Position position;                        //Financial position of the derivative
+  protected int quantity;                               //quantity of the derivative
 
   //Default constructor for Derivative class object
-  public Derivative(Asset new_asset, float new_strike, float new_maturity, Position new_position) {
+  public Derivative(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount) {
     this.asset = new_asset;         //set new asset
     this.strike = new_strike;       //set new strike price
     this.maturity = new_maturity;   //set new maturity date
-    this.position = new_position;   //set new financial position
+    this.position = new_position;   //set new Financial position
+    this.quantity = amount;         //set new quantity
 
     UpdateValue();                  //Update the value of the derivative
     NO_ACTIVE_DERIVATIVES++;
   }
 
   //Alternative constructor for Derivative class object which creates the asset aswell
-  public Derivative(float new_price, String new_name, float new_drift_rate,
-                 float new_volatility, float new_strike, float new_maturity, Position new_position)
+  public Derivative(float new_price, String new_name, float new_drift_rate, float new_volatility,
+                    float new_strike, float new_maturity, Position new_position, int amount)
   {
-    Asset new_asset = new Asset(new_price, new_name, new_drift_rate, new_volatility);  //Create new asset object
+    Asset new_asset = new Asset(new_price, new_name, new_drift_rate, new_volatility, Position.LONG, 1);  //Create new asset object
     this.asset = new_asset;         //set new asset
     this.strike = new_strike;       //set new strike price
     this.maturity = new_maturity;   //set new maturity date
-    this.position = new_position;   //set new financial position
+    this.position = new_position;   //set new Financial position
+    this.quantity = amount;         //set new quantity
 
     UpdateValue();                  //Update the value of the derivative
     NO_ACTIVE_DERIVATIVES++;
@@ -58,7 +62,9 @@ public abstract class Derivative {
 
   public Asset getAsset() { return this.asset; }           //function to return the underlying asset
 
-  public double getMaturity() { return this.maturity; }    //Function to return the maturity date of the derivative
+  public float getMaturity() { return this.maturity; }     //Function to return the maturity date of the derivative
+
+  public int getQuantity() { return this.quantity; }       //Function to return the quantity of derivatives
 
   //This method shall define the pay-off function of the derivative at a given asset price
   public abstract float payOff(float new_asset);

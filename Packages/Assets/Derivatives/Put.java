@@ -21,24 +21,25 @@
   C = Xexp(-rT)N(-d2) - sN(-d1) where d1 = (ln(S/X) + (r + (v^2)/2)t)/vt^1/2 and also
   d2 = (ln(S/X) + (r - (v^2)/2)t)/vt^1/2 ,N the cummulitive distribution for the normal distribution */
 
-  package Packages.Sinatra;
+  package Packages.Assets.Derivatives;
 
   import Packages.StandardNormalDistribution.SND;
   import Packages.GlobalVariables;
   import Packages.Position;
+  import Packages.Assets.Asset;
 
   public class Put extends Derivative {
     //Default constructor for Put class object
-    public Put(Asset new_asset, float new_strike, float new_maturity, Position new_position) {
-      super(new_asset, new_strike, new_maturity, new_position);
+    public Put(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount) {
+      super(new_asset, new_strike, new_maturity, new_position, amount);
     }
 
     //Alternative constructor for Call class object which creates the asset aswell
     public Put(float new_price, String new_name, float new_drift_rate, float new_volatility,
-                      float new_strike, float new_maturity, Position new_position)
+                      float new_strike, float new_maturity, Position new_position, int amount)
     {
       super(new_price, new_name, new_drift_rate, new_volatility,
-            new_strike, new_maturity, new_position);
+            new_strike, new_maturity, new_position, amount);
     }
 
     //Pay-off method for Put contracts given financial position
@@ -46,11 +47,13 @@
       float pay_off = 0f;
       switch (position) {
         case SHORT:
-             pay_off = -1*java.lang.Math.max(strike - asset_value, 0);  //Short position case, P = - max(X - S, 0)
+             //Short position case, P = - max(X - S, 0)
+             pay_off = quantity * (-1*java.lang.Math.max(strike - asset_value, 0));
              break;
 
         case LONG:
-            pay_off = java.lang.Math.max(strike - asset_value, 0);      //Long position case, P = max(X - S, 0)
+            //Long position case, P = max(X - S, 0)
+            pay_off = quantity * (java.lang.Math.max(strike - asset_value, 0));
             break;
       }
       return pay_off;

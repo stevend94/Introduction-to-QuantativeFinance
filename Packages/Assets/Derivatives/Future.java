@@ -12,24 +12,25 @@
   the interest rates are constant(See notes for proof)*/
 
 
-package Packages.Sinatra;
+package Packages.Assets.Derivatives;
 
 import Packages.GlobalVariables;
 import Packages.Position;
+import Packages.Assets.Asset;
 
 public class Future extends Derivative {
 
   //Default constructor for Future class object
-  public Future(Asset new_asset, float new_strike, float new_maturity, Position new_position) {
-    super(new_asset, new_strike, new_maturity, new_position);
+  public Future(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount) {
+    super(new_asset, new_strike, new_maturity, new_position, amount);
   }
 
   //Alternative constructor for Future class object which creates the asset aswell
   public Future(float new_price, String new_name, float new_drift_rate, float new_volatility,
-                    float new_strike, float new_maturity, Position new_position)
+                    float new_strike, float new_maturity, Position new_position, int amount)
   {
     super(new_price, new_name, new_drift_rate, new_volatility,
-          new_strike, new_maturity, new_position);
+          new_strike, new_maturity, new_position, amount);
   }
 
     //Function to change strike price to no arbitrage value
@@ -40,11 +41,13 @@ public class Future extends Derivative {
       float pay_off = 0f;
       switch (position) {
         case SHORT:
-             pay_off = strike - asset_value;      //Short position case, F = X - S
+             //Short position case, F = X - S
+             pay_off = quantity * (strike - asset_value);
              break;
 
         case LONG:
-            pay_off = asset_value - strike;       //Long position case, F = S - X
+            //Long position case, F = S - X
+            pay_off = quantity * (asset_value - strike);       
             break;
       }
       return pay_off;
