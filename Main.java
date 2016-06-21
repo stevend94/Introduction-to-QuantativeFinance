@@ -13,6 +13,7 @@ import Packages.Assets.Derivatives.Future;
 import Packages.Assets.Derivatives.Call;
 import Packages.Assets.Derivatives.Put;
 import Packages.Assets.Bond;
+import Packages.GlobalVariables;
 
 
 
@@ -33,9 +34,19 @@ public class Main{
        System.out.println(forward.payOff(15));
        System.out.println(bond.getValue());
        */
+       System.out.println("");
 
-        Portfolio portfolio = new Portfolio();
+        Portfolio portfolio = new Portfolio("NASDQ Portfolio");
         portfolio.addAsset(7.21f, "ASDX", 0.21f, 0.2f, Position.LONG, 1);
+        portfolio.addAsset(3.62f, "NAFDQ", 0.22f, 0.1f, Position.LONG, 3);
+        portfolio.addAsset(6.15f, "QFTS", 0.07f, 0.3f, Position.LONG, 5);
+        portfolio.addBond(7.83f, "QFTS", 0.5f, 8);
+        portfolio.addForward(4.33f, "ASDX", 0.075f, 0.3f, 5.0f, 0.75f, Position.LONG, 100);
+        portfolio.addCall(4.33f, "ASDX", 0.075f, 0.3f, 5.0f, 0.75f, Position.SHORT, 50);
+        portfolio.addCall(2.76f, "NAFDQ", 0.15f, 0.41f, 5.0f, 0.5f, Position.LONG, 75);
+        portfolio.PrintAssets();
+
+        System.out.println(portfolio.currentInvestment());
         System.out.println("Systems Operational: True");
     }
 

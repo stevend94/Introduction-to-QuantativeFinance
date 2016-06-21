@@ -66,6 +66,8 @@ public abstract class Derivative {
 
   public int getQuantity() { return this.quantity; }       //Function to return the quantity of derivatives
 
+  public Position getPosition() { return this.position; }  //Function to return the financial position of the derivative
+
   //This method shall define the pay-off function of the derivative at a given asset price
   public abstract float payOff(float new_asset);
 

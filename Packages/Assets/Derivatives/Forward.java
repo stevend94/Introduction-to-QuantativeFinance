@@ -20,6 +20,7 @@ public class Forward extends Derivative {
     //Default constructor for Forward class object
     public Forward(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount) {
       super(new_asset, new_strike, new_maturity, new_position, amount);
+      this.name = "Forward contract for " + new_asset.getName() + " with maturity " + new_maturity + " and strike " + new_strike;
     }
 
     //Alternative constructor for Forward class object which creates the asset aswell
@@ -28,6 +29,7 @@ public class Forward extends Derivative {
     {
       super(new_price, new_name, new_drift_rate, new_volatility,
             new_strike, new_maturity, new_position, amount);
+      this.name = "Forward contract for " + new_name + " with maturity " + new_maturity + " and strike " + new_strike;
     }
 
     //Function to change strike price to no arbitrage value

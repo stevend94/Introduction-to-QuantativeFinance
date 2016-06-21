@@ -32,6 +32,7 @@
     //Default constructor for Put class object
     public Put(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount) {
       super(new_asset, new_strike, new_maturity, new_position, amount);
+      this.name = "Put contract for " + new_asset.getName() + " with maturity " + new_maturity + " and strike " + new_strike;
     }
 
     //Alternative constructor for Call class object which creates the asset aswell
@@ -40,6 +41,7 @@
     {
       super(new_price, new_name, new_drift_rate, new_volatility,
             new_strike, new_maturity, new_position, amount);
+      this.name = "Put contract for " + new_name + " with maturity " + new_maturity + " and strike " + new_strike;
     }
 
     //Pay-off method for Put contracts given financial position

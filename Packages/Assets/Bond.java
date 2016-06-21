@@ -24,6 +24,15 @@ public class Bond {
     NO_ACTIVE_BONDS++;
   }
 
+  //Get functions for bond class object
+  public String getName() { return this.name; }
+
+  public float getInvestment() { return this.investment; }
+
+  public float getMaturity() { return this.maturity; }
+
+  public int getQuantity() { return this.quantity; }
+
   //Function to get future value of the bond at maturity
   public float getValue() {
     return quantity * (investment * (float)java.lang.Math.exp(GlobalVariables.INTEREST*maturity));
