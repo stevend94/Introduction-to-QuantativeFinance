@@ -28,11 +28,20 @@
   import Packages.Assets.Asset;
 
   public class Call extends Derivative {
+    private float d1;
+    private float d2;
 
     //Default constructor for Call class object
     public Call(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount) {
       super(new_asset, new_strike, new_maturity, new_position, amount);
       this.name = "Call contract for " + new_asset.getName() + " with maturity " + new_maturity + " and strike " + new_strike;
+
+      this.d1 = ((float)java.lang.Math.log(asset.getPrice()/strike) + ((GlobalVariables.INTEREST + (asset.getVolatility()
+      *asset.getVolatility()))*maturity))/(asset.getVolatility()*(float)java.lang.Math.sqrt(maturity));
+
+      this.d2 = ((float)java.lang.Math.log(asset.getPrice()/strike) + ((GlobalVariables.INTEREST - (asset.getVolatility()
+      *asset.getVolatility()))*maturity))/(asset.getVolatility()*(float)java.lang.Math.sqrt(maturity));
+
     }
 
     //Alternative constructor for Call class object which creates the asset aswell
@@ -42,6 +51,12 @@
       super(new_price, new_name, new_drift_rate, new_volatility,
             new_strike, new_maturity, new_position, amount);
       this.name = "Call contract for " + new_name + " with maturity " + new_maturity + " and strike " + new_strike;
+
+      this.d1 = ((float)java.lang.Math.log(asset.getPrice()/strike) + ((GlobalVariables.INTEREST + (asset.getVolatility()
+      *asset.getVolatility()))*maturity))/(asset.getVolatility()*(float)java.lang.Math.sqrt(maturity));
+
+      this.d2 = ((float)java.lang.Math.log(asset.getPrice()/strike) + ((GlobalVariables.INTEREST - (asset.getVolatility()
+      *asset.getVolatility()))*maturity))/(asset.getVolatility()*(float)java.lang.Math.sqrt(maturity));
     }
 
     //Pay-off method for Call contracts given financial position
@@ -61,19 +76,51 @@
       return pay_off;
      }
 
+
     void UpdateValue() {
-        SND distro = new SND();      //initialize Standard Normal Distribution object
-
-        //Define d1 variable to be applied to normal distribution for black-scholes solution
-        float d1 = ((float)java.lang.Math.log(asset.getPrice()/strike) + ((GlobalVariables.INTEREST + (asset.getVolatility()
-        *asset.getVolatility()))*maturity))/(asset.getVolatility()*(float)java.lang.Math.sqrt(maturity));
-
-        //Define d1 variable to be applied to normal distribution for black-scholes solution
-        float d2 = ((float)java.lang.Math.log(asset.getPrice()/strike) + ((GlobalVariables.INTEREST - (asset.getVolatility()
-        *asset.getVolatility()))*maturity))/(asset.getVolatility()*(float)java.lang.Math.sqrt(maturity));
-
         //Set value as Solution to the black-scholes equation for a call option
-        value = (asset.getPrice()*distro.LinearInterpolate(d1))
+        SND distro = new SND();
+
+        this.value = (asset.getPrice()*distro.LinearInterpolate(d1))
               - (strike*(float)java.lang.Math.exp(-1*GlobalVariables.INTEREST*maturity)*distro.LinearInterpolate(d2));
       }
+
+    //The greeks for the call option
+    public float delta() {
+      //Defined by the first partial differential of call option to asset price
+      SND distro = new SND();
+      return asset.getPrice()*distro.LinearInterpolate(d1);
+    }
+
+    public float theta() {
+      //Defined by the first partial differential equation of call option to time or minus call option to maturity
+      SND distro = new SND();
+      float firstDif = -1* GlobalVariables.INTEREST *
+      (strike*(float)java.lang.Math.exp(-1*GlobalVariables.INTEREST*maturity)*distro.LinearInterpolate(d2));
+
+      float secondDif = -1 * (asset.getPrice()*asset.getVolatility()*(float)java.lang.Math.exp(-1*0.5*d1*d1)
+                        /(2*(float)java.lang.Math.sqrt(2*(float)java.lang.Math.PI*maturity)));
+
+      return firstDif + secondDif;
+    }
+
+    public float gamma() {
+      //Defined by the second partial derivative of the call option to asset price
+      SND distro = new SND();
+      return (1/asset.getPrice()) * ((float)java.lang.Math.exp(-1*0.5*d1*d1)/(asset.getVolatility()
+              *(float)java.lang.Math.sqrt(maturity*2*(float)java.lang.Math.PI)));
+    }
+
+    public float vega() {
+      //Defined by the first partial derivative of the call option to volatility
+      return (asset.getPrice()*(float)java.lang.Math.sqrt(maturity/2*(float)java.lang.Math.PI))
+              *(float)java.lang.Math.exp(-1*0.5*d1*d1);
+   }
+
+    public float rho() {
+      //Defined by the first differential equation of call option to interest rate
+      SND distro = new SND(); 
+      return asset.getPrice()*maturity*(float)java.lang.Math.exp(-1*GlobalVariables.INTEREST*maturity)
+             *distro.LinearInterpolate(d2);
+    }
   }
