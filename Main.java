@@ -44,6 +44,7 @@ public class Main{
         portfolio.addForward(4.33f, "ASDX", 0.075f, 0.3f, 5.0f, 0.75f, Position.LONG, 100);
         portfolio.addCall(4.33f, "ASDX", 0.075f, 0.3f, 5.0f, 0.75f, Position.SHORT, 50);
         portfolio.addCall(2.76f, "NAFDQ", 0.15f, 0.41f, 5.0f, 0.5f, Position.LONG, 75);
+        System.out.println(portfolio.getAsset("ASDX").getPrice());
         portfolio.PrintAssets();
 
         System.out.println(portfolio.currentInvestment());

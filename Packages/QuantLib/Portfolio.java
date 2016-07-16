@@ -68,6 +68,29 @@ public class Portfolio {
     }
   }
 
+  //Function to access an asset from a portfolio through its ordered number
+  public Asset getAsset(int asset_number)
+  {
+    if(ExceedsMax(asset_number, asset_count) == false)
+    {
+      return assets[asset_number];
+    }
+    return null;
+  }
+
+  //Function to access an asset from a portfolio through its name
+  public Asset getAsset(String asset_name)
+  {
+    for(int i = 0; i < asset_count; i++)
+    {
+      if(asset_name == assets[i].getName())
+      {
+        return assets[i];
+      }
+    }
+    return null;
+  }
+
 
   //Function to add new bond using new parameters
   public void addBond(float initial_investment, String new_name, float new_maturity, int amount)
@@ -89,6 +112,30 @@ public class Portfolio {
     bond_count++;
     }
   }
+
+  //Function to access an bond from a portfolio through its ordered number
+  public Bond getBond(int bond_number)
+  {
+    if(ExceedsMax(bond_number, bond_count) == false)
+    {
+      return bonds[bond_number];
+    }
+    return null;
+  }
+
+  //Function to access an bond from a portfolio through its name
+  public Bond getBond(String bond_name)
+  {
+    for(int i = 0; i < bond_count; i++)
+    {
+      if(bond_name == bonds[i].getName())
+      {
+        return bonds[i];
+      }
+    }
+    return null;
+  }
+
 
 
   //Function to add new Forward contract using new parameters
@@ -124,6 +171,29 @@ public class Portfolio {
     }
   }
 
+  //Function to access a forward from a portfolio through its ordered number
+  public Forward getForward(int forward_number)
+  {
+    if(ExceedsMax(forward_number, forward_count) == false)
+    {
+      return forwards[forward_number];
+    }
+    return null;
+  }
+
+  //Function to access a forward from a portfolio through its name
+  public Forward getForward(String forward_name)
+  {
+    for(int i = 0; i < forward_count; i++)
+    {
+      if(forward_name == forwards[i].getName())
+      {
+        return forwards[i];
+      }
+    }
+    return null;
+  }
+
 
   //Function to add call option contracts
   public void addCall(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount)
@@ -157,7 +227,28 @@ public class Portfolio {
     call_count++;
     }
   }
+  //Function to access a call from a portfolio through its ordered number
+  public Call getCall(int call_number)
+  {
+    if(ExceedsMax(call_number, call_count) == false)
+    {
+      return calls[call_number];
+    }
+    return null;
+  }
 
+  //Function to access a call from a portfolio through its name
+  public Call getCall(String call_name)
+  {
+    for(int i = 0; i < call_count; i++)
+    {
+      if(call_name == calls[i].getName())
+      {
+        return calls[i];
+      }
+    }
+    return null;
+  }
 
   //Function to add put option contracts
   public void addPut(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount)
@@ -192,6 +283,28 @@ public class Portfolio {
     }
   }
 
+  //Function to access a put from a portfolio through its ordered number
+  public Put getPut(int put_number)
+  {
+    if(ExceedsMax(put_number, put_count) == false)
+    {
+      return puts[put_number];
+    }
+    return null;
+  }
+
+  //Function to access a put from a portfolio through its name
+  public Put getPut(String put_name)
+  {
+    for(int i = 0; i < put_count; i++)
+    {
+      if(put_name == puts[i].getName())
+      {
+        return puts[i];
+      }
+    }
+    return null;
+  }
 
   //Function to print all assets of portfolio
   public void PrintAssets()
