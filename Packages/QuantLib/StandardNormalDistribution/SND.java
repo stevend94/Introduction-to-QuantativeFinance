@@ -2,9 +2,9 @@
   large number of points defined by the Gaussian distribution and
   linearly interpolate the data to corresponding points*/
 
-package Packages.StandardNormalDistribution;
+package Packages.QuantLib.StandardNormalDistribution;
 
-import Packages.GlobalVariables;
+import Packages.QuantLib.GlobalVariables;
 
 public class SND {
   private static boolean IS_ACTIVE = false;           //To check when this object is in operation
@@ -91,6 +91,6 @@ public class SND {
         return 1 - interpolate_point;
       }
 
-       return 0;   //Never reaches here, just returns null 
+       return 0;   //Never reaches here, just returns null
   }
 }

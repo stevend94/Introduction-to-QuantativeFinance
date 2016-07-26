@@ -11,8 +11,8 @@
 
 package Packages.Assets.Derivatives;
 
-import Packages.GlobalVariables;
-import Packages.Position;
+import Packages.QuantLib.GlobalVariables;
+import Packages.QuantLib.Position;
 import Packages.Assets.Asset;
 
 public class Forward extends Derivative {
@@ -24,10 +24,10 @@ public class Forward extends Derivative {
     }
 
     //Alternative constructor for Forward class object which creates the asset aswell
-    public Forward(float new_price, String new_name, float new_drift_rate, float new_volatility,
+    public Forward(float new_value, String new_name, float new_drift_rate, float new_volatility,
                       float new_strike, float new_maturity, Position new_position, int amount)
     {
-      super(new_price, new_name, new_drift_rate, new_volatility,
+      super(new_value, new_name, new_drift_rate, new_volatility,
             new_strike, new_maturity, new_position, amount);
       this.name = "Forward contract for " + new_name + " with maturity " + new_maturity + " and strike " + new_strike;
     }
@@ -54,7 +54,7 @@ public class Forward extends Derivative {
 
     void UpdateValue() {
       //Function constructed for Forward contract using non arbitrage argument F=Se^RT
-      this.value = asset.getPrice()*((float)java.lang.Math.exp(GlobalVariables.INTEREST*getMaturity()));
+      this.value = asset.getValue()*((float)java.lang.Math.exp(GlobalVariables.INTEREST*getMaturity()));
     }
 
 }

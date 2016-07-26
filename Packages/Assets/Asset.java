@@ -11,10 +11,10 @@
 
 package Packages.Assets;
 
-import Packages.Position;
+import Packages.QuantLib.Position;
 
 public class Asset{
-    private float price;                       //Asset price private Variable
+    private float value;                       //Asset value private Variable
     private String name;                       //Asset name private Variable
     private static int NO_ACTIVE_ASSETS;       //static private var to track number of assets
     private int quantity;                        //the quantity of the asset
@@ -23,11 +23,11 @@ public class Asset{
     private float volatility;                 //Asset stochastic volatility
     private Position position;                //Financial position of asset
 
-    public Asset(float new_price, String new_name, float new_drift_rate,
+    public Asset(float new_value, String new_name, float new_drift_rate,
                  float new_volatility, Position new_position, int amount)
     {
       //Default constructor for asset class
-      this.price = new_price;
+      this.value = new_value;
       this.name = new_name;
       this.drift_rate = new_drift_rate;
       this.volatility = new_volatility;
@@ -37,19 +37,19 @@ public class Asset{
     }
 
     public Asset() {
-      
+
     }
 
     //Return functions for properties of asset
-    public float getPrice() { return this.price; }             //Function to return asset price
-    public String getName() { return this.name; }              //Function to return asset Value
+    public float getValue() { return this.value; }             //Function to return asset value
+    public String getName() { return this.name; }              //Function to return asset Name
     public float getDriftRate() { return this.drift_rate; }    //Function to return asset drift rate
     public float getVolatility() { return this.volatility; }   //Function to return asset volatility
     public int getQuantity() { return this.quantity; }         //Function to return asset quantity
     public Position getPosition() { return this.position; }    //Function to return assets financial position
 
     //change functions for properties of asset
-    public void setPrice(float new_price) { this.price = new_price; }                       //Set new asset price
+    public void setValue(float new_value) { this.value = new_value; }                       //Set new asset value
     public void setName(String new_name) { this.name = new_name; }                          //Set new asset name
     public void setDriftRate(float new_drift_rate) { this.drift_rate = new_drift_rate; }    //Set new asset drift rate
     public void setVolatility(float new_volatility) { this.volatility = new_volatility; }   //Set new asset volatility

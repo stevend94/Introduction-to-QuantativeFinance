@@ -10,8 +10,8 @@ is described by geometric brownian motion and under constant interest rates thro
 
 package Packages.Assets.Derivatives;
 
-import Packages.GlobalVariables;
-import Packages.Position;
+import Packages.QuantLib.GlobalVariables;
+import Packages.QuantLib.Position;
 import Packages.Assets.Asset;
 
 public abstract class Derivative {
@@ -37,10 +37,10 @@ public abstract class Derivative {
   }
 
   //Alternative constructor for Derivative class object which creates the asset aswell
-  public Derivative(float new_price, String new_name, float new_drift_rate, float new_volatility,
+  public Derivative(float new_value, String new_name, float new_drift_rate, float new_volatility,
                     float new_strike, float new_maturity, Position new_position, int amount)
   {
-    Asset new_asset = new Asset(new_price, new_name, new_drift_rate, new_volatility, Position.LONG, 1);  //Create new asset object
+    Asset new_asset = new Asset(new_value, new_name, new_drift_rate, new_volatility, Position.LONG, 1);  //Create new asset object
     this.asset = new_asset;         //set new asset
     this.strike = new_strike;       //set new strike price
     this.maturity = new_maturity;   //set new maturity date
@@ -58,7 +58,7 @@ public abstract class Derivative {
 
   public float getValue() { return this.value; }           //Function to return the value of the derivative
 
-  public float getStrike() { return this.strike; }         //Function to return the strike priceof the derivative
+  public float getStrike() { return this.strike; }         //Function to return the strike price of the derivative
 
   public Asset getAsset() { return this.asset; }           //function to return the underlying asset
 

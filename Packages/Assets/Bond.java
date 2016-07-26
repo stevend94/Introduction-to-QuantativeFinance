@@ -6,7 +6,7 @@
 
 package Packages.Assets;
 
-import Packages.GlobalVariables;
+import Packages.QuantLib.GlobalVariables;
 
 public class Bond {
   private float investment;                 //Initial investment in bond

@@ -6,8 +6,8 @@ package Packages.QuantLib;
 import Packages.Assets.Asset;
 import Packages.Assets.Bond;
 import Packages.Assets.Derivatives.*;
-import Packages.Position;
-import Packages.GlobalVariables;
+import Packages.QuantLib.Position;
+import Packages.QuantLib.GlobalVariables;
 
 public class Portfolio {
   //private assets list for portfolio
@@ -47,12 +47,12 @@ public class Portfolio {
   }
 
   //Function to add new asset using new parameters
-  public void addAsset(float new_price, String new_name, float new_drift_rate,
+  public void addAsset(float new_value, String new_name, float new_drift_rate,
                        float new_volatility, Position new_position, int amount)
   {
     if(ExceedsMax(asset_count, GlobalVariables.MAX_ASSETS) == false)
     {
-    assets[asset_count] = new Asset(new_price, new_name, new_drift_rate, new_volatility, new_position, amount);
+    assets[asset_count] = new Asset(new_value, new_name, new_drift_rate, new_volatility, new_position, amount);
     asset_count++;
     }
   }
@@ -149,12 +149,12 @@ public class Portfolio {
   }
 
   //Function to add new Forward with new asset parameters
-  public void addForward(float new_price, String new_name, float new_drift_rate, float new_volatility,
+  public void addForward(float new_value, String new_name, float new_drift_rate, float new_volatility,
                          float new_strike, float new_maturity, Position new_position, int amount)
   {
     if(ExceedsMax(forward_count, GlobalVariables.MAX_FORWARDS) == false)
     {
-    forwards[forward_count] = new Forward(new_price, new_name, new_drift_rate, new_volatility,
+    forwards[forward_count] = new Forward(new_value, new_name, new_drift_rate, new_volatility,
                                           new_strike, new_maturity, new_position, amount);
     forward_count++;
     }
@@ -206,12 +206,12 @@ public class Portfolio {
   }
 
   //Function to add new call with new asset parameters
-  public void addCall(float new_price, String new_name, float new_drift_rate, float new_volatility,
+  public void addCall(float new_value, String new_name, float new_drift_rate, float new_volatility,
                          float new_strike, float new_maturity, Position new_position, int amount)
   {
     if(ExceedsMax(call_count, GlobalVariables.MAX_CALLS) == false)
     {
-    calls[call_count] = new Call(new_price, new_name, new_drift_rate, new_volatility,
+    calls[call_count] = new Call(new_value, new_name, new_drift_rate, new_volatility,
                              new_strike, new_maturity, new_position, amount);
     call_count++;
     }
@@ -261,12 +261,12 @@ public class Portfolio {
   }
 
   //Function to add new put with new asset parameters
-  public void addPut(float new_price, String new_name, float new_drift_rate, float new_volatility,
+  public void addPut(float new_value, String new_name, float new_drift_rate, float new_volatility,
                          float new_strike, float new_maturity, Position new_position, int amount)
   {
     if(ExceedsMax(call_count, GlobalVariables.MAX_CALLS) == false)
     {
-    puts[put_count] = new Put(new_price, new_name, new_drift_rate, new_volatility,
+    puts[put_count] = new Put(new_value, new_name, new_drift_rate, new_volatility,
                           new_strike, new_maturity, new_position, amount);
     put_count++;
     }
@@ -316,7 +316,7 @@ public class Portfolio {
     if (asset_count != 0) {
     System.out.println("    Current Stocks/Assets: ");
     for(int i = 0; i < asset_count; i++) {
-      System.out.println("    " + assets[i].getName() + " at spot price " + assets[i].getPrice()
+      System.out.println("    " + assets[i].getName() + " at spot price " + assets[i].getValue()
                                              + " [" + assets[i].getQuantity()+ "]");
     }
   }
@@ -371,9 +371,9 @@ public class Portfolio {
      for(int i = 0; i < asset_count; i++)
      {
        if(assets[i].getPosition() == Position.LONG)
-          investment += assets[i].getQuantity()*assets[i].getPrice();
+          investment += assets[i].getQuantity()*assets[i].getValue();
        else
-          investment -= assets[i].getQuantity()*assets[i].getPrice();
+          investment -= assets[i].getQuantity()*assets[i].getValue();
      }
 
      //add all bonds to current value (at time t = 0)

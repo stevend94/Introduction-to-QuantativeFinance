@@ -1,7 +1,7 @@
 /*We reserve this module for world variables and operations involving quantative finance
   which we shall use in our models and applications.*/
 
-  package Packages;
+  package Packages.QuantLib;
 
   public class GlobalVariables {
 
