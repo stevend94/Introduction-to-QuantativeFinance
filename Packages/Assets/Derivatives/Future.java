@@ -9,7 +9,7 @@
   recieved to the party of the long position is paid over distinct intervals over the time to
   the maturity of the contract. Futures can also be exchanged on the market unlike Forwards.
   Now we would expect these pricing models to be the same, which indeed they are givin that
-  the interest rates are constant(See notes for proof)*/
+  the interest rates are constant(Proof is quite easy to find in any quantative finance textbook)*/
 
 
 package Packages.Assets.Derivatives;

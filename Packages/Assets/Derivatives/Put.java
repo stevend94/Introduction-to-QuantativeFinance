@@ -9,7 +9,7 @@
   Now we make a few assumtions here that may or may not apply to the real world,
   -The asset follows geometric brownian motion (as discussed before)
   -The asset has perfect liquidity in the market(plenty of buyers/sellers)
-  -The bid/offer spread is zero (read about this in notes)
+  -The bid/offer spread is zero (read about this in textbook)
   -The interest rates are assumed to be constant throughout
 
   These contracts require a premium (Your rights don't come for free here) and can also
