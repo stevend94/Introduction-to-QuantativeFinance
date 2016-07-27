@@ -2,7 +2,7 @@
   large number of points defined by the Gaussian distribution and
   linearly interpolate the data to corresponding points*/
 
-package Packages.QuantLib.StandardNormalDistribution;
+package Packages.QuantLib;
 
 import Packages.QuantLib.GlobalVariables;
 

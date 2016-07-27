@@ -23,7 +23,7 @@
 
   package Packages.Assets.Derivatives;
 
-  import Packages.QuantLib.StandardNormalDistribution.SND;
+  import Packages.QuantLib.SND;
   import Packages.QuantLib.GlobalVariables;
   import Packages.QuantLib.Position;
   import Packages.Assets.Asset;
