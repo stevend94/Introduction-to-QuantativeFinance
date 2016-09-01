@@ -17,4 +17,5 @@
 *.RTF	 diff=astextplain
 
 #Linguist github analysis
-*.rb linguist-language=java
+*.rb linguist-language=Java
+
