@@ -1,4 +1,3 @@
-
 import Packages.QuantLib.Portfolio;
 import Packages.QuantLib.Position;
 import Packages.Assets.Asset;
@@ -8,6 +7,7 @@ import Packages.Assets.Derivatives.Call;
 import Packages.Assets.Derivatives.Put;
 import Packages.Assets.Bond;
 import Packages.QuantLib.GlobalVariables;
+import Packages.QuantLib.FDate;
 
 
 
@@ -28,6 +28,7 @@ public class Main{
        System.out.println(forward.payOff(15));
        System.out.println(bond.getValue());
        */
+
        System.out.println("");
 
         Portfolio portfolio = new Portfolio("NASDQ Portfolio");
@@ -41,7 +42,13 @@ public class Main{
         //System.out.println(portfolio.getAsset("ASDX").getValue());
         portfolio.PrintAssets();
 
+        FDate date = new FDate(9, 7, 2018);
+        Bond bond = new Bond(7.83f, "QFT", 1, 8);
+        bond.getMaturityDate().printDate();
+
         System.out.println(portfolio.currentInvestment());
+
+
         System.out.println("Systems Operational: True");
     }
 
