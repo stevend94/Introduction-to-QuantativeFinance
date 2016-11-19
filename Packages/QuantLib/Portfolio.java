@@ -46,6 +46,8 @@ public class Portfolio {
     return false;
   }
 
+  ////////////////////////////////////Assets////////////////////////////////////////////////////////////
+
   //Function to add new asset using new parameters
   public void addAsset(float new_value, String new_name, float new_drift_rate,
                        float new_volatility, Position new_position, int amount)
@@ -91,13 +93,24 @@ public class Portfolio {
     return null;
   }
 
+  ////////////////////////////////////Bonds////////////////////////////////////////////////////////////
 
-  //Function to add new bond using new parameters
+  //Function to add new bond using new parameters + maturity as a afraction of a year
   public void addBond(float initial_investment, String new_name, float new_maturity, int amount)
   {
     if(ExceedsMax(bond_count, GlobalVariables.MAX_BONDS) == false)
     {
     bonds[bond_count] = new Bond(initial_investment, new_name, new_maturity, amount);
+    bond_count++;
+    }
+  }
+
+  //Function to add new bond using new parameters + maturity as an actual date
+  public void addBond(float initial_investment, String new_name, FDate new_maturity_date, int amount)
+  {
+    if(ExceedsMax(bond_count, GlobalVariables.MAX_BONDS) == false)
+    {
+    bonds[bond_count] = new Bond(initial_investment, new_name, new_maturity_date, amount);
     bond_count++;
     }
   }
@@ -136,14 +149,24 @@ public class Portfolio {
     return null;
   }
 
+  ////////////////////////////////////Forwards////////////////////////////////////////////////////////////
 
-
-  //Function to add new Forward contract using new parameters
+  //Function to add new Forward contract using new parameters + maturity as a fraction of a year
   public void addForward(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount)
   {
     if(ExceedsMax(forward_count, GlobalVariables.MAX_FORWARDS) == false)
     {
     forwards[forward_count] = new Forward(new_asset, new_strike, new_maturity, new_position, amount);
+    forward_count++;
+    }
+  }
+
+  //Function to add new Forward contract using new parameters + maturity as an actual date
+  public void addForward(Asset new_asset, float new_strike, FDate new_maturity_date, Position new_position, int amount)
+  {
+    if(ExceedsMax(forward_count, GlobalVariables.MAX_FORWARDS) == false)
+    {
+    forwards[forward_count] = new Forward(new_asset, new_strike, new_maturity_date, new_position, amount);
     forward_count++;
     }
   }
@@ -194,13 +217,93 @@ public class Portfolio {
     return null;
   }
 
+  ////////////////////////////////////Futures////////////////////////////////////////////////////////////
 
-  //Function to add call option contracts
+  //Function to add new Future contract using new parameters + maturity as a fraction of a year
+  public void addFuture(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount)
+  {
+    if(ExceedsMax(futures_count, GlobalVariables.MAX_FUTURES) == false)
+    {
+    futures[futures_count] = new Future(new_asset, new_strike, new_maturity, new_position, amount);
+    futures_count++;
+    }
+  }
+
+  //Function to add new Future contract using new parameters + maturity as an actual date
+  public void addFuture(Asset new_asset, float new_strike, FDate new_maturity_date, Position new_position, int amount)
+  {
+    if(ExceedsMax(futures_count, GlobalVariables.MAX_FUTURES) == false)
+    {
+    futures[futures_count] = new Future(new_asset, new_strike, new_maturity_date, new_position, amount);
+    futures_count++;
+    }
+  }
+
+  //Function to add new Future with new asset parameters
+  public void addFuture(float new_value, String new_name, float new_drift_rate, float new_volatility,
+                         float new_strike, float new_maturity, Position new_position, int amount)
+  {
+    if(ExceedsMax(futures_count, GlobalVariables.MAX_FUTURES) == false)
+    {
+    futures[futures_count] = new Future(new_value, new_name, new_drift_rate, new_volatility,
+                                          new_strike, new_maturity, new_position, amount);
+    futures_count++;
+    }
+  }
+
+
+  //Function to add new Future using existing forward
+  public void addFuture(Future new_future)
+  {
+    if(ExceedsMax(futures_count, GlobalVariables.MAX_FUTURES) == false)
+    {
+    futures[futures_count] = new_future;
+    futures_count++;
+    }
+  }
+
+  //Function to access a future from a portfolio through its ordered number
+  public Future getFuture(int future_number)
+  {
+    if(ExceedsMax(future_number, futures_count) == false)
+    {
+      return futures[future_number];
+    }
+    return null;
+  }
+
+  //Function to access a future from a portfolio through its name
+  public Future getFuture(String future_name)
+  {
+    for(int i = 0; i < futures_count; i++)
+    {
+      if(future_name == futures[i].getName())
+      {
+        return futures[i];
+      }
+    }
+    return null;
+  }
+
+
+  ////////////////////////////////////Calls////////////////////////////////////////////////////////////
+
+  //Function to add call option contracts + maturity as a fraction of a year
   public void addCall(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount)
   {
     if(ExceedsMax(call_count, GlobalVariables.MAX_CALLS) == false)
     {
     calls[call_count] = new Call(new_asset, new_strike, new_maturity, new_position, amount);
+    call_count++;
+    }
+  }
+
+  //Function to add call option contracts + maturity as an actual date
+  public void addCall(Asset new_asset, float new_strike, FDate new_maturity_date, Position new_position, int amount)
+  {
+    if(ExceedsMax(call_count, GlobalVariables.MAX_CALLS) == false)
+    {
+    calls[call_count] = new Call(new_asset, new_strike, new_maturity_date, new_position, amount);
     call_count++;
     }
   }
@@ -250,12 +353,24 @@ public class Portfolio {
     return null;
   }
 
-  //Function to add put option contracts
+  ////////////////////////////////////Puts////////////////////////////////////////////////////////////
+
+  //Function to add put option contracts + maturity as a fraction of a year
   public void addPut(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount)
   {
     if(ExceedsMax(call_count, GlobalVariables.MAX_CALLS) == false)
     {
     puts[put_count] = new Put(new_asset, new_strike, new_maturity, new_position, amount);
+    put_count++;
+    }
+  }
+
+  //Function to add put option contracts + maturity as an actual date
+  public void addPut(Asset new_asset, float new_strike, FDate new_maturity_date, Position new_position, int amount)
+  {
+    if(ExceedsMax(call_count, GlobalVariables.MAX_CALLS) == false)
+    {
+    puts[put_count] = new Put(new_asset, new_strike, new_maturity_date, new_position, amount);
     put_count++;
     }
   }
@@ -326,8 +441,9 @@ public class Portfolio {
    if (bond_count != 0) {
    System.out.println("    Current Bonds:");
    for(int i = 0; i < bond_count; i++) {
-     System.out.println("    " + bonds[i].getName() + " of investment " + bonds[i].getInvestment() + " and maturity " +
-     bonds[i].getMaturity() + " with face value " + bonds[i].getValue() + " [" + bonds[i].getQuantity() + "]");
+     System.out.println("    " + bonds[i].getName() + " of investment " + bonds[i].getInvestment()
+     + " and maturity date " + bonds[i].getMaturityDate().getDate().toString() + " with face value "
+     + bonds[i].getValue() + " [" + bonds[i].getQuantity() + "]");
     }
   }
     System.out.println("");

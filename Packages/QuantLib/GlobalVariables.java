@@ -3,9 +3,14 @@
 
   package Packages.QuantLib;
 
+  import Packages.QuantLib.FDate;
+  import java.lang.Math;
+
   public class GlobalVariables {
 
-  public enum Position { SHORT, LONG }   //Defines financial position with given derivative
+  public enum Position { SHORT, LONG } //Defines financial position with given derivative
+
+  public static final FDate CURRENT_DATE = new FDate(19, 11, 2016);
 
   //For convenience we fix the (annual continuously compounded) interest rates for derivates at 0.5
   public static final float INTEREST = 0.5f;

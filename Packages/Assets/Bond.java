@@ -7,21 +7,36 @@
 package Packages.Assets;
 
 import Packages.QuantLib.GlobalVariables;
+import Packages.QuantLib.FDate;
 
 public class Bond {
   private float investment;                 //Initial investment in bond
   private String name;                      //Name of given bond
   private static int NO_ACTIVE_BONDS;       //static private var to track number of assets
-  private float maturity;                   //Time duration till maturity of bond
+  private FDate maturity_date;              //maturity date for object
+  private float maturity;                   //the time (in days) to maturity
   private int quantity;                     //the quantity of this bond
 
-  //Default constructor for Bond class object
-  public Bond(float initial_investment, String new_name, float new_maturity, int amount) {
+  //Default constructor for Bond class object with date (FDate)
+  public Bond(float initial_investment, String new_name, FDate new_maturity_date, int amount) {
     this.investment = initial_investment;
     this.name = new_name;
-    this.maturity = new_maturity;
+    this.maturity_date = new_maturity_date;
     this.quantity = amount;
     NO_ACTIVE_BONDS++;
+    this.maturity = GlobalVariables.CURRENT_DATE.daysBetween(maturity_date)/365.2422f;
+  }
+
+  //Constructor for Bond class object with maturity date as a fraction of a year
+  public Bond(float initial_investment, String new_name, float time_to_maturity, int amount) {
+    this.investment = initial_investment;
+    this.name = new_name;
+    this.maturity = time_to_maturity;
+    this.quantity = amount;
+    NO_ACTIVE_BONDS++;
+    this.maturity_date = new FDate(GlobalVariables.CURRENT_DATE.getDay(),
+                                  (GlobalVariables.CURRENT_DATE.getMonth() + (int)(maturity * 12)),
+                                   GlobalVariables.CURRENT_DATE.getYear());
   }
 
   //Get functions for bond class object
@@ -30,6 +45,8 @@ public class Bond {
   public float getInvestment() { return this.investment; }
 
   public float getMaturity() { return this.maturity; }
+
+  public FDate getMaturityDate() { return this.maturity_date; }
 
   public int getQuantity() { return this.quantity; }
 

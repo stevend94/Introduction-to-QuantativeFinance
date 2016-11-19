@@ -16,6 +16,7 @@ package Packages.Assets.Derivatives;
 
 import Packages.QuantLib.GlobalVariables;
 import Packages.QuantLib.Position;
+import Packages.QuantLib.FDate;
 import Packages.Assets.Asset;
 
 public class Future extends Derivative {
@@ -23,7 +24,15 @@ public class Future extends Derivative {
   //Default constructor for Future class object
   public Future(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount) {
     super(new_asset, new_strike, new_maturity, new_position, amount);
-    this.name = "Future contract for " + new_asset.getName() + " with maturity " + new_maturity + " and strike " + new_strike;
+    this.name = "Future contract for " + new_asset.getName() + " with maturity date "
+                + this.maturity_date.getDate().toString() + " and strike " + new_strike;
+  }
+
+  //Constructor for Future class object with maturity as an actual date (FDate)
+  public Future(Asset new_asset, float new_strike, FDate new_maturity_date, Position new_position, int amount) {
+    super(new_asset, new_strike, new_maturity_date, new_position, amount);
+    this.name = "Future contract for " + new_asset.getName() + " with maturity date "
+                + this.maturity_date.getDate().toString() + " and strike " + new_strike;
   }
 
   //Alternative constructor for Future class object which creates the asset aswell
@@ -32,7 +41,8 @@ public class Future extends Derivative {
   {
     super(new_value, new_name, new_drift_rate, new_volatility,
           new_strike, new_maturity, new_position, amount);
-    this.name = "Future contract for " + new_name + " with maturity " + new_maturity + " and strike " + new_strike;
+    this.name = "Future contract for " + new_name + " with maturity date "
+                + this.maturity_date.getDate().toString() + " and strike " + new_strike;
   }
 
     //Function to change strike price to no arbitrage value

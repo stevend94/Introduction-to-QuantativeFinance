@@ -26,6 +26,7 @@
   import Packages.QuantLib.SND;
   import Packages.QuantLib.GlobalVariables;
   import Packages.QuantLib.Position;
+  import Packages.QuantLib.FDate;
   import Packages.Assets.Asset;
 
   public class Put extends Derivative {
@@ -35,7 +36,21 @@
     //Default constructor for Put class object
     public Put(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount) {
       super(new_asset, new_strike, new_maturity, new_position, amount);
-      this.name = "Put contract for " + new_asset.getName() + " with maturity " + new_maturity + " and strike " + new_strike;
+      this.name = "Put contract for " + new_asset.getName() + " with maturity date "
+                  + this.maturity_date.getDate().toString() + " and strike " + new_strike;
+
+      this.d1 = ((float)java.lang.Math.log(asset.getValue()/strike) + ((GlobalVariables.INTEREST + (asset.getVolatility()
+      *asset.getVolatility()))*maturity))/(asset.getVolatility()*(float)java.lang.Math.sqrt(maturity));
+
+      this.d2 = ((float)java.lang.Math.log(asset.getValue()/strike) + ((GlobalVariables.INTEREST - (asset.getVolatility()
+      *asset.getVolatility()))*maturity))/(asset.getVolatility()*(float)java.lang.Math.sqrt(maturity));
+    }
+
+    //Constructor for Put class object with actual date
+    public Put(Asset new_asset, float new_strike, FDate new_maturity_date, Position new_position, int amount) {
+      super(new_asset, new_strike, new_maturity_date, new_position, amount);
+      this.name = "Put contract for " + new_asset.getName() + " with maturity date "
+                   + new_maturity_date.getDate().toString() + " and strike " + new_strike;
 
       this.d1 = ((float)java.lang.Math.log(asset.getValue()/strike) + ((GlobalVariables.INTEREST + (asset.getVolatility()
       *asset.getVolatility()))*maturity))/(asset.getVolatility()*(float)java.lang.Math.sqrt(maturity));
@@ -50,7 +65,8 @@
     {
       super(new_value, new_name, new_drift_rate, new_volatility,
             new_strike, new_maturity, new_position, amount);
-      this.name = "Put contract for " + new_name + " with maturity " + new_maturity + " and strike " + new_strike;
+      this.name = "Put contract for " + new_name + " with maturity date "
+                  + this.maturity_date.getDate().toString() + " and strike " + new_strike;
 
       this.d1 = ((float)java.lang.Math.log(asset.getValue()/strike) + ((GlobalVariables.INTEREST + (asset.getVolatility()
       *asset.getVolatility()))*maturity))/(asset.getVolatility()*(float)java.lang.Math.sqrt(maturity));

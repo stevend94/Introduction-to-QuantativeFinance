@@ -17,11 +17,11 @@ public class Asset{
     private float value;                       //Asset value private Variable
     private String name;                       //Asset name private Variable
     private static int NO_ACTIVE_ASSETS;       //static private var to track number of assets
-    private int quantity;                        //the quantity of the asset
+    private int quantity;                      //the quantity of the asset
 
-    private float drift_rate;                 //Asset drift rate (diffusion model)
-    private float volatility;                 //Asset stochastic volatility
-    private Position position;                //Financial position of asset
+    private float drift_rate;                  //Asset drift rate (diffusion model)
+    private float volatility;                  //Asset stochastic volatility
+    private Position position;                 //Financial position of asset
 
     public Asset(float new_value, String new_name, float new_drift_rate,
                  float new_volatility, Position new_position, int amount)
