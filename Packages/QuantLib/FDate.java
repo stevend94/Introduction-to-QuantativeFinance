@@ -32,7 +32,7 @@ public class FDate{
 
     //Attempt to parse input data for date
     try{
-      date = sdf.parse(dataInput);
+      date = sdf.parse(dateInput);
     }
     catch(ParseException e) {
       System.out.println("ERROR: " + e);
