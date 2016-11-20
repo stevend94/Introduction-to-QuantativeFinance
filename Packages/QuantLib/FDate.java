@@ -24,7 +24,8 @@ public class FDate{
     this.day = new_day;
     this.month = new_month;
     this.year = new_year;
-
+    
+    //Set data string for date format
     String dateInput = Integer.toString(new_day)
                        + "-" + Integer.toString(new_month)
                        + "-" + Integer.toString(new_year);
