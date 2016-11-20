@@ -81,8 +81,6 @@ public class FDate{
   public int daysBetween(FDate endDate) {
       long startTime = date.getTime();
       long endTime = endDate.getDate().getTime();
-      System.out.println(startTime);
-      System.out.println(endTime);
       return (int)Math.abs((startTime - endTime)/(MDC));
   }
 
