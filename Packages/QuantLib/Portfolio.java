@@ -22,7 +22,7 @@ public class Portfolio {
   private int asset_count;
   private int bond_count;
   private int forward_count;
-  private int futures_count;
+  private int future_count;
   private int call_count;
   private int put_count;
 
@@ -222,20 +222,20 @@ public class Portfolio {
   //Function to add new Future contract using new parameters + maturity as a fraction of a year
   public void addFuture(Asset new_asset, float new_strike, float new_maturity, Position new_position, int amount)
   {
-    if(ExceedsMax(futures_count, GlobalVariables.MAX_FUTURES) == false)
+    if(ExceedsMax(future_count, GlobalVariables.MAX_FUTURES) == false)
     {
-    futures[futures_count] = new Future(new_asset, new_strike, new_maturity, new_position, amount);
-    futures_count++;
+    futures[future_count] = new Future(new_asset, new_strike, new_maturity, new_position, amount);
+    future_count++;
     }
   }
 
   //Function to add new Future contract using new parameters + maturity as an actual date
   public void addFuture(Asset new_asset, float new_strike, FDate new_maturity_date, Position new_position, int amount)
   {
-    if(ExceedsMax(futures_count, GlobalVariables.MAX_FUTURES) == false)
+    if(ExceedsMax(future_count, GlobalVariables.MAX_FUTURES) == false)
     {
-    futures[futures_count] = new Future(new_asset, new_strike, new_maturity_date, new_position, amount);
-    futures_count++;
+    futures[future_count] = new Future(new_asset, new_strike, new_maturity_date, new_position, amount);
+    future_count++;
     }
   }
 
@@ -243,11 +243,11 @@ public class Portfolio {
   public void addFuture(float new_value, String new_name, float new_drift_rate, float new_volatility,
                          float new_strike, float new_maturity, Position new_position, int amount)
   {
-    if(ExceedsMax(futures_count, GlobalVariables.MAX_FUTURES) == false)
+    if(ExceedsMax(future_count, GlobalVariables.MAX_FUTURES) == false)
     {
-    futures[futures_count] = new Future(new_value, new_name, new_drift_rate, new_volatility,
+    futures[future_count] = new Future(new_value, new_name, new_drift_rate, new_volatility,
                                           new_strike, new_maturity, new_position, amount);
-    futures_count++;
+    future_count++;
     }
   }
 
@@ -255,17 +255,17 @@ public class Portfolio {
   //Function to add new Future using existing forward
   public void addFuture(Future new_future)
   {
-    if(ExceedsMax(futures_count, GlobalVariables.MAX_FUTURES) == false)
+    if(ExceedsMax(future_count, GlobalVariables.MAX_FUTURES) == false)
     {
-    futures[futures_count] = new_future;
-    futures_count++;
+    futures[future_count] = new_future;
+    future_count++;
     }
   }
 
   //Function to access a future from a portfolio through its ordered number
   public Future getFuture(int future_number)
   {
-    if(ExceedsMax(future_number, futures_count) == false)
+    if(ExceedsMax(future_number, future_count) == false)
     {
       return futures[future_number];
     }
@@ -275,7 +275,7 @@ public class Portfolio {
   //Function to access a future from a portfolio through its name
   public Future getFuture(String future_name)
   {
-    for(int i = 0; i < futures_count; i++)
+    for(int i = 0; i < future_count; i++)
     {
       if(future_name == futures[i].getName())
       {
@@ -456,7 +456,17 @@ public class Portfolio {
      }
    }
      System.out.println("");
-
+      
+    //Here we print all Future contracts
+    if (future_count != 0) {
+        System.out.println("    Current Future Contracts: ");
+        for(int i = 0; i < future_count; i++) {
+            System.out.println("    " + futures[i].getName() +
+                            " with value " + futures[i].getValue() + " [" + futures[i].getQuantity() + "]");
+        }
+    }
+    System.out.println("");
+      
     //Here we print all call contracts
     if (call_count != 0) {
     System.out.println("    Current Call Contracts: ");
@@ -466,8 +476,9 @@ public class Portfolio {
      }
    }
       System.out.println("");
+    
 
-    //Here we print all call contracts
+    //Here we print all put contracts
     if (put_count != 0) {
     System.out.println("    Current Put Contracts:");
     for(int i = 0; i < put_count; i++) {
@@ -517,3 +528,4 @@ public class Portfolio {
   }
 
 }
+
