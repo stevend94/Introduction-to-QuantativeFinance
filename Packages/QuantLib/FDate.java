@@ -18,7 +18,7 @@ public class FDate{
   private int month;
   private int year;
 
-
+  //Default constructor for FDate object
   public FDate(int new_day, int new_month, int new_year) {
     sdf = new SimpleDateFormat("dd-MM-yyyy");  //Modify date format
     this.day = new_day;
@@ -29,11 +29,9 @@ public class FDate{
                        + "-" + Integer.toString(new_month)
                        + "-" + Integer.toString(new_year);
 
-    String input = dateInput;
-
     //Attempt to parse input data for date
     try{
-      date = sdf.parse(input);
+      date = sdf.parse(dataInput);
     }
     catch(ParseException e) {
       System.out.println("ERROR: " + e);
